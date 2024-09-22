@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:practice_app/data/todo_database.dart';
+import 'package:practice_app/pages/drawer_page.dart';
+import 'package:practice_app/settings/themes/dark_theme.dart';
+import 'package:practice_app/settings/themes/light_theme.dart';
 import 'package:practice_app/utils/dialog_box.dart';
 import 'package:practice_app/utils/todo_tile.dart';
 
@@ -59,29 +62,50 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // changing theme
+  void changeTheme(bool value) {
+    setState(() {
+      myBox.put('isDark', value);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.teal,
-        title: Text(
-          'To Do',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+    return MaterialApp(
+      theme: LightTheme.themeData, // Apply light theme
+      darkTheme: DarkTheme.themeData, // Apply dark theme
+      themeMode: myBox.get('isDark') == null
+          ? ThemeMode.system
+          : myBox.get('isDark')
+              ? ThemeMode.dark
+              : ThemeMode.light,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        drawer: DrawerPage(
+          isDarkMode: myBox.get('isDark') == null ? false : myBox.get('isDark'),
+          onChanged: (value) => changeTheme(value),
         ),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: ListView.builder(
-        itemCount: db.todos.length,
-        itemBuilder: (context, index) => TodoTile(
-          taskName: db.todos[index][0],
-          isCompleted: db.todos[index][1],
-          onChanged: (value) => checkBoxClicked(index, value),
-          deleteTask: (context) => deleteTaskFunction(index),
+        appBar: AppBar(
+          backgroundColor: Colors.teal,
+          title: Text(
+            'My Planner',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          centerTitle: true,
+          elevation: 0,
         ),
+        body: ListView.builder(
+          itemCount: db.todos.length,
+          itemBuilder: (context, index) => TodoTile(
+            taskName: db.todos[index][0],
+            isCompleted: db.todos[index][1],
+            onChanged: (value) => checkBoxClicked(index, value),
+            deleteTask: (context) => deleteTaskFunction(index),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: showDialogBox, child: Icon(Icons.add)),
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: showDialogBox, child: Icon(Icons.add)),
     );
   }
 }
