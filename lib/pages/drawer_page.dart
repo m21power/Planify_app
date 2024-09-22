@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:practice_app/pages/about_page.dart';
 
 class DrawerPage extends StatelessWidget {
-  Function(bool)? onChanged;
+  final Function(bool)? onChanged;
   final isDarkMode;
   DrawerPage({super.key, required this.onChanged, required this.isDarkMode});
   @override
@@ -11,31 +11,50 @@ class DrawerPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ListTile(
-            onTap: () {},
-            leading: Switch(
-              value: isDarkMode,
-              activeTrackColor: Colors.green,
-              onChanged: onChanged,
-              thumbColor: WidgetStateProperty.all(Colors.white),
-            ),
-            title: Text('D A R K   M O D E'),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AboutPage(),
+          Row(
+            children: [
+              Transform.scale(
+                scale: 0.7,
+                child: Switch(
+                  value: isDarkMode,
+                  activeTrackColor: Colors.green,
+                  onChanged: onChanged,
+                  thumbColor: WidgetStateProperty.all(Colors.white),
                 ),
-              );
-            },
-            leading: Icon(
-              Icons.info,
-              color: Colors.blue,
-            ),
-            title: Text('A B O U T'),
+              ),
+              Text(
+                'D A R K   M O D E',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
+          Row(
+            children: [
+              SizedBox(
+                width: 10,
+              ),
+              Icon(
+                Icons.info,
+                color: Colors.blue,
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => AboutPage(),
+                    ),
+                  );
+                },
+                child: Text(
+                  'A B O U T',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:practice_app/settings/themes/dark_theme.dart';
+import 'package:practice_app/settings/themes/light_theme.dart';
 
 class AboutPage extends StatelessWidget {
-  const AboutPage({super.key});
-
+  AboutPage({super.key});
+  final myBox = Hive.box('myBox');
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: LightTheme.themeData, // Apply light theme
+      darkTheme: DarkTheme.themeData, // Apply dark theme
+      themeMode: myBox.get('isDark') == null
+          ? ThemeMode.system
+          : myBox.get('isDark')
+              ? ThemeMode.dark
+              : ThemeMode.light,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
@@ -13,8 +23,11 @@ class AboutPage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Icon(Icons.arrow_back)),
-          backgroundColor: Colors.teal[100],
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              )),
+          backgroundColor: Colors.teal,
           title: Text(
             'About',
             style: TextStyle(
@@ -63,7 +76,10 @@ class AboutPage extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  Text('https://t.me/MesaysAppVault')
+                  Text(
+                    'https://t.me/MesaysAppVault',
+                    style: TextStyle(color: Colors.blue),
+                  )
                 ],
               )
             ],

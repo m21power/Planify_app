@@ -9,7 +9,7 @@ class DialogBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: Container(
-        height: 150,
+        height: 200,
         child: Column(
           children: [
             SizedBox(height: 20),

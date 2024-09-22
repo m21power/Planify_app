@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 class DarkTheme {
   static ThemeData get themeData {
     return ThemeData(
-      inputDecorationTheme: InputDecorationTheme(
-        hintStyle: TextStyle(color: Colors.white70),
-        labelStyle: TextStyle(color: Colors.white),
-      ),
       brightness: Brightness.dark,
       primarySwatch: Colors.blueGrey,
       scaffoldBackgroundColor: Colors.black,
