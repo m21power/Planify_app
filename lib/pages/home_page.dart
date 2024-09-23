@@ -1,5 +1,8 @@
 import 'package:Plannify/data/todo_database.dart';
+import 'package:Plannify/pages/about_page.dart';
+import 'package:Plannify/pages/consistency_page.dart';
 import 'package:Plannify/pages/drawer_page.dart';
+import 'package:Plannify/pages/main_screen_page.dart';
 import 'package:Plannify/settings/themes/dark_theme.dart';
 import 'package:Plannify/settings/themes/light_theme.dart';
 import 'package:Plannify/utils/dialog_box.dart';
@@ -71,73 +74,56 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  //pages of the app
+
+  List _pages = [AboutPage(), HomePage(), ConsistencyPage()];
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: LightTheme.themeData, // Apply light theme
-      darkTheme: DarkTheme.themeData, // Apply dark theme
-      themeMode: myBox.get('isDark') == null
-          ? ThemeMode.system
+    return Scaffold(
+      backgroundColor: myBox.get('isDark') == null
+          ? Colors.white
           : myBox.get('isDark')
-              ? ThemeMode.dark
-              : ThemeMode.light,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        drawer: DrawerPage(
-          isDarkMode: myBox.get('isDark') == null ? false : myBox.get('isDark'),
-          onChanged: (value) => changeTheme(value),
-        ),
-        appBar: AppBar(
-          backgroundColor: Colors.teal,
-          title: Text(
-            'My Planner',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+              ? Colors.black
+              : Colors.white,
+      drawer: DrawerPage(
+        isDarkMode: myBox.get('isDark') == null ? false : myBox.get('isDark'),
+        onChanged: (value) => changeTheme(value),
+      ),
+      appBar: AppBar(
+        actions: [
+          ElevatedButton(
+            onPressed: showDialogBox,
+            child: Icon(
+              Icons.add,
+              color: Colors.black,
             ),
+            style: ButtonStyle(
+                iconSize: WidgetStatePropertyAll(30),
+                shape: WidgetStateProperty.all(CircleBorder()),
+                elevation: WidgetStateProperty.all(0),
+                backgroundColor: WidgetStateProperty.all(Colors.teal)),
+          )
+        ],
+        backgroundColor: Colors.teal,
+        title: Text(
+          'Daily Plan',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
-          centerTitle: true,
-          elevation: 0,
         ),
-        body: ListView.builder(
-          itemCount: db.todos.length,
-          itemBuilder: (context, index) => TodoTile(
-            taskName: db.todos[index][0],
-            isCompleted: db.todos[index][1],
-            onChanged: (value) => checkBoxClicked(index, value),
-            deleteTask: (context) => deleteTaskFunction(index),
-          ),
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: ListView.builder(
+        itemCount: db.todos.length,
+        itemBuilder: (context, index) => TodoTile(
+          taskName: db.todos[index][0],
+          isCompleted: db.todos[index][1],
+          onChanged: (value) => checkBoxClicked(index, value),
+          deleteTask: (context) => deleteTaskFunction(index),
         ),
-        bottomNavigationBar: CurvedNavigationBar(
-            height: 50,
-            backgroundColor: myBox.get('isDark') == null
-                ? Colors.white
-                : myBox.get('isDark')
-                    ? Colors.black
-                    : Colors.white,
-            color: Colors.teal,
-            animationDuration: Duration(milliseconds: 300),
-            items: [
-              Icon(
-                size: 30,
-                Icons.info,
-                color: Colors.white,
-              ),
-              Icon(
-                size: 30,
-                Icons.assignment,
-                color: Colors.white,
-              ),
-              Icon(
-                size: 30,
-                Icons.flash_on,
-                color: Colors.amber,
-              )
-            ]),
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: showDialogBox,
-        //   child: Icon(Icons.add),
-        // ),
       ),
     );
   }
