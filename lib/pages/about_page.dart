@@ -1,7 +1,7 @@
+import 'package:Plannify/settings/themes/dark_theme.dart';
+import 'package:Plannify/settings/themes/light_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:practice_app/settings/themes/dark_theme.dart';
-import 'package:practice_app/settings/themes/light_theme.dart';
 
 class AboutPage extends StatelessWidget {
   AboutPage({super.key});

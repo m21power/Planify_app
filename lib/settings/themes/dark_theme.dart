@@ -6,6 +6,7 @@ class DarkTheme {
       brightness: Brightness.dark,
       primarySwatch: Colors.blueGrey,
       scaffoldBackgroundColor: Colors.black,
+      navigationBarTheme: NavigationBarThemeData(backgroundColor: Colors.black),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.grey[900], // Dark background for app bar
         titleTextStyle: TextStyle(

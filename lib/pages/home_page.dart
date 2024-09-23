@@ -1,11 +1,12 @@
+import 'package:Plannify/data/todo_database.dart';
+import 'package:Plannify/pages/drawer_page.dart';
+import 'package:Plannify/settings/themes/dark_theme.dart';
+import 'package:Plannify/settings/themes/light_theme.dart';
+import 'package:Plannify/utils/dialog_box.dart';
+import 'package:Plannify/utils/todo_tile.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:practice_app/data/todo_database.dart';
-import 'package:practice_app/pages/drawer_page.dart';
-import 'package:practice_app/settings/themes/dark_theme.dart';
-import 'package:practice_app/settings/themes/light_theme.dart';
-import 'package:practice_app/utils/dialog_box.dart';
-import 'package:practice_app/utils/todo_tile.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -20,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   final myBox = Hive.box('myBox');
   // IF the app is opened for the first time, then add some default tasks
   @override
+  // ignore: must_call_super
   void initState() {
     if (myBox.get('TODOLIST') == null) {
       db.InitialState();
@@ -89,7 +91,10 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.teal,
           title: Text(
             'My Planner',
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
           centerTitle: true,
           elevation: 0,
@@ -103,8 +108,36 @@ class _HomePageState extends State<HomePage> {
             deleteTask: (context) => deleteTaskFunction(index),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-            onPressed: showDialogBox, child: Icon(Icons.add)),
+        bottomNavigationBar: CurvedNavigationBar(
+            height: 50,
+            backgroundColor: myBox.get('isDark') == null
+                ? Colors.white
+                : myBox.get('isDark')
+                    ? Colors.black
+                    : Colors.white,
+            color: Colors.teal,
+            animationDuration: Duration(milliseconds: 300),
+            items: [
+              Icon(
+                size: 30,
+                Icons.info,
+                color: Colors.white,
+              ),
+              Icon(
+                size: 30,
+                Icons.assignment,
+                color: Colors.white,
+              ),
+              Icon(
+                size: 30,
+                Icons.flash_on,
+                color: Colors.amber,
+              )
+            ]),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: showDialogBox,
+        //   child: Icon(Icons.add),
+        // ),
       ),
     );
   }

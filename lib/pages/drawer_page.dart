@@ -1,5 +1,5 @@
+import 'package:Plannify/pages/about_page.dart';
 import 'package:flutter/material.dart';
-import 'package:practice_app/pages/about_page.dart';
 
 class DrawerPage extends StatelessWidget {
   final Function(bool)? onChanged;
