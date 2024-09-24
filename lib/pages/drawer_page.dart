@@ -1,4 +1,3 @@
-import 'package:Plannify/pages/about_page.dart';
 import 'package:flutter/material.dart';
 
 class DrawerPage extends StatelessWidget {
@@ -25,7 +24,9 @@ class DrawerPage extends StatelessWidget {
                 ),
                 Text(
                   'D A R K   M O D E',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: isDarkMode ? Colors.white : Colors.black),
                 ),
               ],
             ),

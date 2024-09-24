@@ -1,9 +1,24 @@
+import 'package:Plannify/pages/drawer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class AboutPage extends StatelessWidget {
+class AboutPage extends StatefulWidget {
   AboutPage({super.key});
+
+  @override
+  State<AboutPage> createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
   final myBox = Hive.box('myBox');
+
+  // changing theme
+  void changeTheme(bool value) {
+    setState(() {
+      myBox.put('isDark', value);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,6 +27,10 @@ class AboutPage extends StatelessWidget {
           : myBox.get('isDark')
               ? Colors.black
               : Colors.white,
+      drawer: DrawerPage(
+        isDarkMode: myBox.get('isDark') == null ? false : myBox.get('isDark'),
+        onChanged: (value) => changeTheme(value),
+      ),
       appBar: AppBar(
         backgroundColor: Colors.teal,
         title: Text(

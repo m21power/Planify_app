@@ -3,11 +3,8 @@ import 'package:Plannify/pages/about_page.dart';
 import 'package:Plannify/pages/consistency_page.dart';
 import 'package:Plannify/pages/drawer_page.dart';
 import 'package:Plannify/pages/main_screen_page.dart';
-import 'package:Plannify/settings/themes/dark_theme.dart';
-import 'package:Plannify/settings/themes/light_theme.dart';
 import 'package:Plannify/utils/dialog_box.dart';
 import 'package:Plannify/utils/todo_tile.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -76,6 +73,7 @@ class _HomePageState extends State<HomePage> {
 
   //pages of the app
 
+  // ignore: unused_field
   List _pages = [AboutPage(), HomePage(), ConsistencyPage()];
 
   @override
